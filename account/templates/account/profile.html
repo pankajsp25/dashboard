@@ -13,7 +13,7 @@
                 <div class="card author-box">
                   <div class="card-body">
                     <div class="author-box-center">
-                      <img alt="image" src="{% static 'dashboard/img/users/user-1.png' %}" class="rounded-circle author-box-picture">
+                      <img id="img-profile-image" alt="image" src="{{ profile_form.instance.profile_image.url }}" class="rounded-circle author-box-picture">
                       <div class="clearfix"></div>
 
                       <div class="author-box-name">
@@ -148,6 +148,10 @@
                         <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings" role="tab"
                           aria-selected="false">Setting</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="profile-image-tab1" data-toggle="tab" href="#profile-image" role="tab"
+                          aria-selected="false">Profile Image</a>
+                      </li>
                     </ul>
                     <div class="tab-content tab-bordered" id="myTab3Content">
                       <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab2">
@@ -251,12 +255,7 @@
                                 {{ profile_form.phone|add_class:"form-control" }}
                               </div>
                             </div>
-                            <div class="row">
-                               <div class="form-group col-md-6 col-12">
-                                <label>{{ profile_form.profile_image.label }}</label>
-<!--                                <input type="file" class="form-control">-->
-                                 {{ profile_form.profile_image|add_class:"form-control" }}
-                              </div>
+
                             </div>
                             <div class="row">
                               <div class="form-group col-12">
@@ -276,11 +275,36 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+
                           <div class="card-footer text-right">
                             <button class="btn btn-primary">Save Changes</button>
                           </div>
                         </form>
+                      </div>
+                      <div class="tab-pane fade" id="profile-image" role="tabpanel" aria-labelledby="profile-image-tab1">
+                       <div class="card-header">
+                            <h4>Edit Profile</h4>
+                          </div>
+                        <div id="result-profile-image">
+
+                        </div>
+                        <div class="card-body">
+                           <form id="frm-profile-image" onsubmit="return false;">
+                              {% csrf_token %}
+                            <div class="row">
+
+                              <div class="form-group col-md-12 col-12">
+                                <label>{{ profile_form.profile_image.label }}</label>
+
+                                 <input type="file" class="form-control" name="profile-image" id="id_profile_image">
+                              </div>
+                            </div>
+                             <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+                           </form>
+                          </div>
+
                       </div>
                     </div>
                   </div>
@@ -296,15 +320,20 @@
 
  <script src="{% static 'dashboard/bundles/summernote/summernote-bs4.js' %}"></script>
 <script>
+
     $(document).ready(function() {
+    var update_url = '/account/api/profile/'+{{ request.user.pk }}+'/'
+
     var obj = {
       'form': 'update_profile',
-      'url': '/account/api/profile/'+{{ request.user.pk }}+'/',
+      'url': update_url,
       'method': 'PUT',
       'success_msg': 'Profile updated successfully!',
       'result_div': 'result',
     };
     submit_form_ajax(obj)
+
+    upload_profile_image(update_url)
 
 });
 

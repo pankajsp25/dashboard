@@ -47,7 +47,11 @@ class ProfileSerializers(serializers.Serializer):
         instance.email = validated_data.get('email', instance.email)
         instance.profile.phone = validated_data.get('phone', instance.profile.phone)
         instance.profile.bio = validated_data.get('bio', instance.profile.bio)
-        instance.profile.profile_image = validated_data.get('profile_image', instance.profile.profile_image)
+        if validated_data.get('profile_image'):
+            instance.profile.profile_image.delete(save=False)
+            instance.profile.profile_image = validated_data.get('profile_image')
+        else:
+            instance.profile.profile_image = instance.profile.profile_image
 
         instance.save()
 

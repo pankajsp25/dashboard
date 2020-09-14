@@ -97,3 +97,30 @@ $('#'+obj.form).submit(function() { // catch the form's submit event
         return false;
     });
 }
+
+var upload_profile_image = function(url) {
+$("#frm-profile-image").submit(function(){
+        var fd = new FormData();
+        var files = $('#id_profile_image')[0].files[0];
+        fd.append('profile_image',files);
+
+        $.ajax({
+            url: url,
+            type: 'put',
+            data: fd,
+            contentType: false,
+            processData: false,
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader ("X-CSRFToken", csrftoken);
+            },
+            success: function(response){
+                if(response != 0){
+                   $("#img-profile-image").attr("src",response.profile_image);
+                   $("#result-profile-image").html(get_success_alert('Profile image updated successfully'));
+                }else{
+                    $("#result-profile-image").append(get_danger_alert('Something went wrong'))
+                }
+            },
+        });
+    });
+}
