@@ -1,0 +1,28 @@
+{% if form.errors %}
+
+    {% for field in form %}
+        {% for error in field.errors %}
+                  <div class="alert alert-danger alert-dismissible show fade">
+                      <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                          <span>×</span>
+                        </button>
+                          {{ field.label|escape }}:
+                        {{ error|escape }}
+                      </div>
+                    </div>
+
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+                  <div class="alert alert-danger alert-dismissible show fade">
+                      <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                          <span>×</span>
+                        </button>
+                        {{ error|escape }}
+                      </div>
+                    </div>
+
+    {% endfor %}
+{% endif %}

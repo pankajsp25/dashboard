@@ -12,5 +12,6 @@ class BlogAdmin(admin.ModelAdmin):
 
     get_author_name.short_description = 'Author'
 
+
 admin.site.register(BlogCategory)
 admin.site.register(Blog, BlogAdmin)

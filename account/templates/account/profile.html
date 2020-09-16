@@ -13,7 +13,11 @@
                 <div class="card author-box">
                   <div class="card-body">
                     <div class="author-box-center">
+                      {% if profile_form.instance.profile_image %}
                       <img id="img-profile-image" alt="image" src="{{ profile_form.instance.profile_image.url }}" class="rounded-circle author-box-picture">
+                      {% else %}
+                      <img id="img-profile-image" alt="image" src="{% static 'dashboard/img/avtar.jpg' %}" class="rounded-circle author-box-picture">
+                      {% endif %}
                       <div class="clearfix"></div>
 
                       <div class="author-box-name">

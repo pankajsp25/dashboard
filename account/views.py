@@ -1,17 +1,13 @@
-from rest_framework.parsers import FileUploadParser, MultiPartParser
+from rest_framework.parsers import MultiPartParser
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
-from django.views.generic.edit import UpdateView
+from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.decorators import permission_classes
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import UpdateModelMixin
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response

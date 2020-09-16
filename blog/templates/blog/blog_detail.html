@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <article class="article article-style-c">
+          <div class="article-header">
+              {% if blog.image %}
+                <div class="article-image" data-background="{{ blog.image.url }}">
+                </div>
+              {% else %}
+                <div class="article-image" data-background="{% static 'dashboard/img/no-image.png' %}">
+                </div>
+              {% endif %}
+          </div>
+          <div class="article-details">
+            <div class="article-category"><a href="#">{{ blog.category }}</a>
+              <div class="bullet"></div> <a href="#">{{ blog.updated_at }} </a>
+            </div>
+            <div class="article-title">
+              <h2><a href="{% url 'blog:detail' pk=blog.pk %}">{{ blog.title }}</a></h2>
+            </div>
+              <div class="buttons">
+                <a href="{% url 'blog:edit' pk=blog.pk %}" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                <a href="{% url 'blog:delete' pk=blog.pk %}" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
+              </div>
+              {% autoescape off %}
+              {{ blog.description }}
+              {% endautoescape %}
+            <div class="article-user">
+                {% if blog.author.profile.profile_image %}
+                    <img alt="image" src="{{ blog.author.profile.profile_image.url }}">
+                {% else %}
+                    <img alt="image" src="{% static 'dashboard/img/avtar.jpg' %}" >
+                {% endif %}
+              <div class="article-user-details">
+                <div class="user-detail-name">
+                  <a href="#">{{ blog.author.get_full_name }}</a>
+                </div>
+                <div class="text-job">Java Developer</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+
+</div>
+
+{% endblock %}
